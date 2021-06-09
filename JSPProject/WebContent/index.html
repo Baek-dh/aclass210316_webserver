@@ -17,5 +17,18 @@
         <!-- button 태그의 type 기본값은 submit -->
         <button>로그인</button>
     </form>
+
+    <hr>
+    <h3>회원 로그인(JDBC 연동)</h3>
+
+    <form action="/JSPProject/login.do"   method="POST">
+        <label for="memberId">ID</label>
+        <input type="text" name="memberId" id="memberId" size="20"> <br>
+
+        <label for="memberPw">PW</label>
+        <input type="password" name="memberPw" id="memberPw" size="20">
+
+        <button>로그인</button>
+    </form>    
 </body>
 </html>
