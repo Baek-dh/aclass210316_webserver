@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ServletProject</title>
+</head>
+<body>
+    <h3>Servlet 맛보기</h3>
+    
+    <form action="/ServletProject/example1.do"  method="POST">
+        <!-- 
+            form : form 태그 내부에 작성된 input 관련 태그의 값을
+                   서버로 전달하기 위한 역할
+            
+            action : 전달하려는 서버의 주소
+         -->
+
+         이름 : <input type="text" name="inputName"> <br>
+         나이 : <input type="number" name="inputAge"> <br>
+         <button type="submit">제출하기</button>
+    </form>
+
+    <hr>
+
+    <h3>POST 방식으로 데이터 전달하기</h3>
+
+    <form method="post"
+          action="/ServletProject/testServlet1.do">
+        
+        이름 : <input type="text" name="inputName"> <br>
+        성별 : 
+        남자 <input type="radio" name="gender" value="남자">
+        여자 <input type="radio" name="gender" value="여자">
+
+        <br>
+        선호하는 음식 스타일 
+        <input type="checkbox" name="food" value="한식"> 한식
+        <input type="checkbox" name="food" value="일식"> 일식
+        <input type="checkbox" name="food" value="중식"> 중식
+        <input type="checkbox" name="food" value="양식"> 양식
+
+        <br><br>
+        <button>제출하기</button>
+
+    </form>
+
+
+
+    
+</body>
+</html>

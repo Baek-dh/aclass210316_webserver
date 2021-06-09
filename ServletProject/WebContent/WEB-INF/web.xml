@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" id="WebApp_ID" version="3.0">
+  <display-name>ServletProject</display-name>
+  <welcome-file-list>
+  	<!-- 서버 접속 시 메인 화면으로 지정할 파일 이름을 작성하는 부분 -->
+    <welcome-file>index.html</welcome-file>
+  </welcome-file-list>
+  
+  
+  <servlet>
+  	<servlet-name>Example1</servlet-name>
+  	<servlet-class>com.kh.servlet.Example1</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+  	<servlet-name>Example1</servlet-name>
+  	<url-pattern>/example1.do</url-pattern>
+  </servlet-mapping>
+  
+  
+  <!-- TestServlet1 요청 주소와 처리할 Servlet연결 -->
+  <servlet>
+  	<servlet-name>TestServlet1</servlet-name>
+  	<servlet-class>com.kh.servlet.TestServlet1</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+  	<servlet-name>TestServlet1</servlet-name>
+  	<url-pattern>/testServlet1.do</url-pattern>
+  </servlet-mapping>
+  
+  
+  
+  
+  
+  
+  
+  
+</web-app>
