@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd" id="WebApp_ID" version="3.1">
+  <display-name>JSPProject</display-name>
+  
+  <!-- web.xml 파일 : 배포 서술자 
+  	서버(Tomcat) 구동 시 제일 처음으로 읽어들이는 파일
+  	(웹에서 배포는 인터넷 주소로 접근할 수 있는 형태로 만드는 것)
+  -->
+  
+  <!-- 프로젝트 메인화면을 지정하는 설정 -->
+  <welcome-file-list>
+    <welcome-file>index.html</welcome-file>
+  </welcome-file-list>
+  
+  
+  <!-- example.do 주소로 요청이 왔을 때 연결될 servlet 지정 -->
+  <!-- <servlet>
+  	<servlet-name>ex</servlet-name>
+  	<servlet-class>com.kh.jsp.Example</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>ex</servlet-name>
+  	<url-pattern>/example.do</url-pattern>
+  </servlet-mapping> -->
+  
+  
+  
+  
+  
+  
+  
+  
+  
+</web-app>
