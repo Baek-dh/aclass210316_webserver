@@ -24,6 +24,13 @@
   </servlet-mapping> -->
   
   
+   	<!-- 404 에러 발생 시 연결될 페이지 지정 -->
+  	<error-page>
+  		<error-code>404</error-code>
+  		<location>/views/404Error.jsp</location>
+  	</error-page>
+  
+  
   
   
   

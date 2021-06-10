@@ -1,6 +1,8 @@
 package edu.kh.member.controller;
 
 import java.io.IOException;
+
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -38,6 +40,18 @@ public class LoginServlet extends HttpServlet {
 			Member loginMember = service.login(memberId, memberPw);
 			
 			System.out.println(loginMember);
+			
+			// 응답 화면을 만들기 위해 JSP로 요청 위임
+			
+			// 1) 요청 위임 객체(ReuqestDispatcher) 생성
+			RequestDispatcher view = request.getRequestDispatcher("views/result.jsp");
+			
+			// 2) 기존 요청(request)에 없는 내용을 HttpServletRequest의 속성으로 추가
+			request.setAttribute("loginMember", loginMember);
+			
+			// 3) 요청 위임 객체에 request, response를 담아서 jsp로 전송
+			view.forward(request, response);
+			
 			
 		} catch (Exception e) {
 			e.printStackTrace();
