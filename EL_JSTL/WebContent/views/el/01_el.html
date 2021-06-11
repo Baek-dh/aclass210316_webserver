@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EL이란?</title>
+</head>
+<body>
+    <h3>EL이란?</h3>
+    <pre>
+        Expression Language(표현 언어)의 약자이며
+        JSP의 표현식을 조금더 효율적이고 간단하게 사용하는 방법.
+        화면에 표현하고자 하는 코드를 ${ value } 형식으로 작성함.
+    </pre>
+
+    <form method="GET" action="/EL_JSTL/el1.do">
+        <!--  /el1.do : 실제로 존재하는 파일이 아닌
+                        요청을 처리해줄 Servlet을 호출하는 주소.
+                        @WebServlet("/el1.do") 라고 작성된 Servlet이
+                        요청을 처리함
+                    -->
+        
+        이름 : <input type="text" name="inputName"> <br>
+        나이 : <input type="number" name="inputAge"> <br>
+        주소 : <input type="text" name="inputAddr"> <br>
+
+        <button>제출하기</button>
+        <button type="reset">초기화</button>
+    </form>
+
+
+    <hr>
+
+    <a href="/EL_JSTL/views/el/02_el_etc.jsp">EL 관련 특징 + 기타 등등</a>
+
+
+
+
+
+</body>
+</html>
