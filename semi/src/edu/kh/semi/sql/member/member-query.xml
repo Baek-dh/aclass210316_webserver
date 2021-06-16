@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+
+	<!-- 로그인 SQL -->
+	<entry key="login">
+		SELECT MEMBER_NO, MEMBER_ID, MEMBER_NM, MEMBER_PHONE,
+           MEMBER_EMAIL, MEMBER_ADDR, ENROLL_DATE, MEMBER_GRADE
+		FROM MEMBER
+		WHERE MEMBER_ID = ?
+		AND MEMBER_PW = ?
+		AND MEMBER_STATUS = 'Y'
+	</entry>
+
+
+</properties>

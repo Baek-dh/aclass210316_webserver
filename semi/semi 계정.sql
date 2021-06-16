@@ -201,3 +201,27 @@ REFERENCES "BOARD" (
 	"BOARD_NO"
 );
 
+
+------------------------------------------------------------------------------------------------
+
+-- MEMBER 테이블에 샘플 데이터 추가
+
+-- 1) 회원 번호 생성용 SEQUENCE 생성
+CREATE SEQUENCE SEQ_MNO;
+-- 1부터 1씩 증가하는 시퀀스 생성
+
+-- 2) 관리자 계정 샘플 데이터 추가
+INSERT INTO MEMBER
+VALUES( SEQ_MNO.NEXTVAL, 'admin', '1q2w3e4r', '김관리', '010-1234-1234', 
+            'admin@kh.or.kr', '04540, 서울특별시 중구 남대문로 120, 2층 KH정보교육원 종로지원 A강의장',
+            DEFAULT, DEFAULT, DEFAULT);
+
+
+
+
+
+
+
+
+
+
