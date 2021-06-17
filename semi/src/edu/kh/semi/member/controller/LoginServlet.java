@@ -95,6 +95,14 @@ public class LoginServlet extends HttpServlet {
 				}
 				
 				
+				// 4) 쿠키가 사용될 수 있는 유효한 경로(디렉토리 또는 주소)를 설정
+				cookie.setPath( request.getContextPath() );
+				// 해당 경로 및 하위 모든 경로에서 saveId 쿠키를 사용할 수 있음.
+				
+				
+				// 5) response에 Cookie를 담아서 클라이언트로 전달
+				response.addCookie(cookie);
+				
 				
 				
 			}else { // 로그인 실패

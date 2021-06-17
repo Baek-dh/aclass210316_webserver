@@ -102,21 +102,28 @@ body {
 								 == submit 기본 이벤트 제거
 						 -->	
 
-						<input type="text" class="form-control" id="memberId" name="memberId" placeholder="아이디" value="">
+						<input type="text" class="form-control" id="memberId" name="memberId" placeholder="아이디" value="${cookie.saveId.value}">
 						<br>
 						<input type="password" class="form-control" id="memberPw" name="memberPw" placeholder="비밀번호">
 						<br>
 
+						<%-- 이전에 저장해둔 아이디가 존재한다면 --%>
+						<c:if test="${ !empty cookie.saveId.value }">
+							<c:set var="ch" value="checked" />
+						</c:if>
+
 						<div class="checkbox mb-3">
 							<label> 
-								<input type="checkbox" name="save" id="save"> 아이디 저장
+								<input type="checkbox" name="save" id="save" ${ch}> 아이디 저장
 							</label>
 						</div>
+
+
 
 						<button class="btn btn-lg btn-primary btn-block" type="submit">로그인</button>
 						
 						
-						<a class="btn btn-lg btn-secondary btn-block" href="#">회원가입</a>
+						<a class="btn btn-lg btn-secondary btn-block" href="${contextPath}/member/signUp">회원가입</a>
 					</form>
 				</div>
 				
