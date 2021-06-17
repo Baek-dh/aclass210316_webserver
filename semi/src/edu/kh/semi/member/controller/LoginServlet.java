@@ -3,6 +3,7 @@ package edu.kh.semi.member.controller;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -24,6 +25,11 @@ public class LoginServlet extends HttpServlet {
 		// 2. 로그인 요청 시 전달 받은 파라미터를 변수에 저장
 		String memberId = request.getParameter("memberId");
 		String memberPw = request.getParameter("memberPw");
+		String save = request.getParameter("save");
+		
+		// checkbox를 체크했을 때/안했을 때 넘어오는 값 확인
+		//System.out.println("save : " + save);
+		// 결과 : 체크하면 "on", 안하면 null
 		
 		// ** 로그인이란?
 		// 아이디와 비밀번호가 일치하는 정보를 DB에서 조회하여 Session에 추가하는 기능
@@ -53,10 +59,53 @@ public class LoginServlet extends HttpServlet {
 				// session에 로그인 정보 추가
 				session.setAttribute("loginMember", loginMember);
 				
+				// 일정 시간 후 세션 만료
+				// 30분 후 세션 만료
+				session.setMaxInactiveInterval(1800); // 초 단위로 작성
+				
+				
+				// ****************************** //
+				// javax.servlet.http.Cookie 를 이용한 아이디 저장
+				
+				/* Cookie란?
+				 * 
+				 * 파일의 형태로 브라우저에서 관리하는 자원.
+				 * 
+				 * Session의 저장된 정보는 Server에서 관리함.
+				 * Cookie의 저장된 정보는 Client에서 관리함.
+				 * 
+				 * Cookie의 생성은 Server쪽에서 수행해 
+				 * 응답(response)에 담아서 Client로 전달함
+				 * */
+				
+				
+				// 1) Cookie 객체 생성
+				Cookie cookie = new Cookie("saveId", memberId);
+				
+				// 2) 아이디 저장이 체크된 경우
+				if(save != null) {
+					// 쿠키는 반드시 만료 기간을 설정해야 한다.
+					cookie.setMaxAge(60 * 60 * 24 * 7); // 초 단위
+					// 일주일
+					
+				} else {
+					// 3) 아이디 저장이 체크되지 않은 경우
+					// -> 아이디가 저장된 쿠키 제거
+					cookie.setMaxAge(0); // 만료 기간 0초 == 쿠키 제거
+				}
+				
+				
+				
+				
 			}else { // 로그인 실패
 				
+				session.setAttribute("icon", "error"); // success, warning, error, info
+				session.setAttribute("title", "로그인 실패");
+				session.setAttribute("text", "아이디 또는 비밀번호가 일치하지 않습니다.");
+				// session에 로그인 실패 메세지를 담는 이유
+				// -> redirect 시 request는 폐기 되기 때문에
+				//    request보다 범위가 넓은 session에 담아서 내용을 유지하기 위함
 			}
-			
 			
 			// ****** forward와 redirect ******
 			// 1) forward 방식

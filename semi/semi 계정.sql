@@ -214,7 +214,19 @@ CREATE SEQUENCE SEQ_MNO;
 INSERT INTO MEMBER
 VALUES( SEQ_MNO.NEXTVAL, 'admin', '1q2w3e4r', '김관리', '010-1234-1234', 
             'admin@kh.or.kr', '04540, 서울특별시 중구 남대문로 120, 2층 KH정보교육원 종로지원 A강의장',
-            DEFAULT, DEFAULT, DEFAULT);
+            DEFAULT, DEFAULT, 'A');
+
+COMMIT;
+
+-- 로그인을 위한 SELECT 구문
+SELECT MEMBER_NO, MEMBER_ID, MEMBER_NM, MEMBER_PHONE,
+           MEMBER_EMAIL, MEMBER_ADDR, ENROLL_DATE, MEMBER_GRADE
+FROM MEMBER
+WHERE MEMBER_ID = 'admin'
+AND MEMBER_PW = '1q2w3e4r'
+AND MEMBER_STATUS = 'Y'
+;
+
 
 
 
