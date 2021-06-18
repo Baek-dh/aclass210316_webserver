@@ -12,6 +12,7 @@
 		margin: 0;
 	}
 </style>
+
 </head>
 <body>
 	<jsp:include page="../common/header.jsp"></jsp:include>
@@ -64,7 +65,7 @@
 							<label for="pwd1">* 비밀번호</label>
 						</div>
 						<div class="col-md-6">
-							<input type="password" class="form-control" id="pwd1" name="pwd1" maxlength="12" placeholder="비밀번호를 입력하세요" required>
+							<input type="password" class="form-control" id="pwd1" name="pwd1" maxlength="20" placeholder="비밀번호를 입력하세요" required>
 						</div>
 
 						<div class="col-md-6 offset-md-3">
@@ -78,7 +79,7 @@
 							<label for="pwd2">* 비밀번호 확인</label>
 						</div>
 						<div class="col-md-6">
-							<input type="password" class="form-control" id="pwd2" maxlength="12" placeholder="비밀번호 확인" required>
+							<input type="password" class="form-control" id="pwd2" maxlength="20" placeholder="비밀번호 확인" required>
 						</div>
 
 						<div class="col-md-6 offset-md-3">
@@ -203,5 +204,13 @@
 		
 	</div>
 	<jsp:include page="../common/footer.jsp"></jsp:include>
+	
+	
+	<script src="${contextPath}/resources/js/member.js"></script>
+	
 </body>
 </html>
+
+
+
+

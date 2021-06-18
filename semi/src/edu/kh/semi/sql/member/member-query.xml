@@ -12,5 +12,17 @@
 		AND MEMBER_STATUS = 'Y'
 	</entry>
 
+	<!-- 회원 가입 SQL -->
+	<entry key="signUp">
+		INSERT INTO MEMBER
+			VALUES( SEQ_MNO.NEXTVAL , ?, ?, ?, ?, ?, ?,
+            DEFAULT,DEFAULT, DEFAULT)
+	</entry>  
+
+
+
+
+
+
 
 </properties>

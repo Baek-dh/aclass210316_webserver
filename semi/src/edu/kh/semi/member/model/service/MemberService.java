@@ -34,6 +34,34 @@ public class MemberService {
 		// 서비스 수행 결과 반환
 		return loginMember;
 	}
+
+
+	/** 회원 가입 Service
+	 * @param member
+	 * @return result
+	 * @throws Exception
+	 */
+	public int signUp(Member member) throws Exception{
+		
+		// 1) 커넥션 얻어오기
+		Connection conn = getConnection();
+		
+		// 2) DAO 호출해서 insert 진행 후 결과 반환받기
+		int result = dao.signUp(conn, member);
+		
+		// 3) 반환 받은 결과에 따라 트랜잭션 처리하기
+		if(result > 0)	commit(conn);
+		else			rollback(conn);
+		
+		// 4) 사용한 커넥션 반환하기
+		close(conn);
+
+		// 5) 결과를 Controller로 반환하기
+		return result;
+	}
+	
+	
+	
 	
 
 	

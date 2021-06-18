@@ -94,6 +94,45 @@ public class MemberDAO {
 		// 조회 결과 반환 (조회 성공 시 Member, 실패 시 null 이 반환됨)
 		return loginMember;
 	}
+
+
+	/** 회원 가입 DAO
+	 * @param conn
+	 * @param member
+	 * @return result
+	 * @throws Exception
+	 */
+	public int signUp(Connection conn, Member member) throws Exception {
+		
+		// 1) 결과 반환용 변수 선언
+		int result = 0;
+		
+		// 2) SQL구문을 Properties에서 얻어오기
+		String sql = prop.getProperty("signUp");
+		
+		try {
+			// 3) PreparedStatement 객체를 생성해서 SQL 세팅
+			pstmt = conn.prepareStatement(sql);
+			
+			// 4) 위치홀더에 알맞은 값 대입
+			pstmt.setString(1, member.getMemberId());
+			pstmt.setString(2, member.getMemberPw());
+			pstmt.setString(3, member.getMemberName());
+			pstmt.setString(4, member.getMemberPhone());
+			pstmt.setString(5, member.getMemberEmail());
+			pstmt.setString(6, member.getMemberAddress());
+			
+			// 5) SQL 수행 후 결과 반환 받기
+			result = pstmt.executeUpdate();
+		
+		}finally {
+			// 6) 사용한 JDBC 자원 반환하기
+			close(pstmt);
+		}
+		
+		// 7) 결과를 Service로 반환하기
+		return result;
+	}
 	
 	
 	

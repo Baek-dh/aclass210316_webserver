@@ -67,7 +67,7 @@ body {
 						
 						
 						<c:otherwise>
-							<li class="nav-item active"><a class="nav-link" href="#">${loginMember.memberName }</a></li>
+							<li class="nav-item active"><a class="nav-link" href="${contextPath}/member/myPage">${loginMember.memberName }</a></li>
 							<li class="nav-item active"><a class="nav-link" href="${contextPath}/member/logout">Logout</a></li>
 						</c:otherwise>
 					</c:choose>

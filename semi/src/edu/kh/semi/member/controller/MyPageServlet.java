@@ -1,4 +1,4 @@
-package edu.kh.semi.common;
+package edu.kh.semi.member.controller;
 
 import java.io.IOException;
 
@@ -9,26 +9,18 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-// 메인 페이지 요청 주소   http://localhost:8080/semi/
-@WebServlet("/main")
-public class MainServlet extends HttpServlet {
+@WebServlet("/member/myPage")
+public class MyPageServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-
+       
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// 메인페이지 최근 게시글 -> DB에 저장됨 -> Service, DAO(JDBC) 필요 -> Servlet 필요
-	
-		// 메인페이지 요청이 왔을 경우 main.jsp로 요청 위임
-		RequestDispatcher view 
-			= request.getRequestDispatcher("/WEB-INF/views/main.jsp");
 		
-		// 요청 위임되는 jsp파일의 경로는 WebContent를 기준으로 작성한다.
-		
-		// 요청 위임 객체를 이용하여 request,response 객체를 jsp로 전송
+		String path = "/WEB-INF/views/member/myPage.jsp";
+		RequestDispatcher view = request.getRequestDispatcher(path);
 		view.forward(request, response);
+		
 	}
-	
-	
-	
+
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doGet(request, response);
 	}
