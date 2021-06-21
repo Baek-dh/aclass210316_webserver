@@ -20,6 +20,15 @@
 	</entry>  
 
 
+	<!-- 아이디 중복검사 SQL -->
+	<entry key="idDupCheck">
+		SELECT COUNT(*) FROM MEMBER
+		WHERE MEMBER_STATUS = 'Y'
+		AND MEMBER_ID = ?
+	</entry>
+
+
+
 
 
 

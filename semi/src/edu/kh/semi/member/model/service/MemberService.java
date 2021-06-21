@@ -59,6 +59,23 @@ public class MemberService {
 		// 5) 결과를 Controller로 반환하기
 		return result;
 	}
+
+
+	/** 아이디 중복검사 Service
+	 * @param id
+	 * @return result
+	 * @throws Exception
+	 */
+	public int idDupCheck(String id) throws Exception{
+		
+		Connection conn = getConnection();
+		
+		int result = dao.idDupCheck(conn, id);
+		
+		close(conn);
+		
+		return result;
+	}
 	
 	
 	

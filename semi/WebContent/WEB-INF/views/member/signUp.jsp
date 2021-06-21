@@ -208,8 +208,24 @@
 	
 	<script src="${contextPath}/resources/js/member.js"></script>
 	
+	
+	<script>
+		// 아이디 중복 검사용 팝업창 오픈
+		$("#idDupCheck").on("click", function(){
+			// window.open("주소/경로", "창 이름", "스타일 설정");
+			window.open("idDupCheck", "idDupForm", "width=450, height=250");
+			// 절대 경로 : ${contextPath}/member/idDupCheck
+			// 상대 경로 : idDupCheck
+		});
+		
+	</script>
+	
+	
 </body>
 </html>
+
+
+
 
 
 

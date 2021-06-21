@@ -229,6 +229,15 @@ AND MEMBER_STATUS = 'Y'
 
 
 
+-- 탈퇴하지 않은 회원 중 중복되는 아이디가 있는지 검사
+-- 조회 결과   
+-- 중복 O : 1
+-- 중복 X : 0
+
+SELECT COUNT(*) FROM MEMBER
+WHERE MEMBER_STATUS = 'Y'
+AND MEMBER_ID = 'user991111';
+
 
 
 
