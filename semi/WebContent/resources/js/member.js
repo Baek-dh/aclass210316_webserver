@@ -15,6 +15,9 @@ const checkObj = {
 
 $("#id").on("input", function(){
 
+    // 아이디가 입력되는 경우 hidden타입 태그의 값을 false로 변경
+    $("#idDup").val(false);
+
     // 정규표현식 객체 생성
     const regExp = /^[a-zA-Z0-9]{6,12}$/;
 
@@ -155,6 +158,17 @@ $(".phone").on("input", function(){
 // 회원 가입 버튼 클릭 시 전체 유효성 검사 여부 확인
 function validate(){
 
+    // 아이디 중복 검사를 진행했는지 확인
+    // * input 태그 값을 모두 String으로 반환됨!
+    if( $("#idDup").val() != "true" ){ // 중복 검사를 안한 경우
+        swal("아이디 중복 검사를 진행해 주세요.").then(function(){
+            $("#idDupCheck").focus(); // 중복 검사 버튼으로 포커스 이동
+        });
+
+        return false; // submit 이벤트 제거
+    }
+
+
     // checkObj에 작성된 속성들이 모두 true인지 확인
 
     // 객체 내 속성을 순차접근하는 반복문 :  for in구문
@@ -195,9 +209,7 @@ function validate(){
             return false;  // submit 이벤트 제거(회원가입 실행 X)
 
         }
-
     }
-
 }
 
 
