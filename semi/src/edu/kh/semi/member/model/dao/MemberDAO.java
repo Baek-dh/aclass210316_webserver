@@ -167,6 +167,67 @@ public class MemberDAO {
 		
 		return result;
 	}
+
+
+	/** 회원 정보 수정 DAO
+	 * @param conn
+	 * @param member
+	 * @return result
+	 * @throws Exception
+	 */
+	public int memberUpdate(Connection conn, Member member) throws Exception{
+		int result = 0;
+		
+		String sql = prop.getProperty("memberUpdate");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, member.getMemberEmail());
+			pstmt.setString(2, member.getMemberPhone());
+			pstmt.setString(3, member.getMemberAddress());
+			pstmt.setInt(4, member.getMemberNo());
+			
+			result = pstmt.executeUpdate();
+			
+		}finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+
+	/** 비밀번호 변경 DAO
+	 * @param conn
+	 * @param currentPwd
+	 * @param newPwd1
+	 * @param memberNo
+	 * @return
+	 * @throws Exception
+	 */
+	public int changePwd(Connection conn, String currentPwd, String newPwd1, int memberNo) throws Exception{
+		
+		int result = 0;
+		
+		String sql = prop.getProperty("changePwd");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, newPwd1);
+			pstmt.setString(2, currentPwd);
+			pstmt.setInt(3, memberNo);
+			
+			result = pstmt.executeUpdate();
+			
+			
+		}finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
 	
 	
 	

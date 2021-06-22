@@ -27,6 +27,23 @@
 		AND MEMBER_ID = ?
 	</entry>
 
+	
+	<!-- 회원 정보 수정 SQL -->
+	<entry key="memberUpdate">
+		UPDATE MEMBER SET
+			MEMBER_EMAIL = ?,
+			MEMBER_PHONE = ?,
+			MEMBER_ADDR = ?
+		WHERE MEMBER_NO = ?
+	</entry>
+	
+	<!-- 비밀번호 변경 SQL -->
+	<entry key="changePwd">
+		UPDATE MEMBER SET
+		MEMBER_PW = ?
+		WHERE MEMBER_PW = ?
+		AND MEMBER_NO = ?
+	</entry>
 
 
 

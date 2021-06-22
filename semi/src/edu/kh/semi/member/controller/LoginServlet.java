@@ -25,6 +25,10 @@ public class LoginServlet extends HttpServlet {
 		// 2. 로그인 요청 시 전달 받은 파라미터를 변수에 저장
 		String memberId = request.getParameter("memberId");
 		String memberPw = request.getParameter("memberPw");
+		
+		System.out.println(memberId);
+		System.out.println(memberPw);
+		
 		String save = request.getParameter("save");
 		
 		// checkbox를 체크했을 때/안했을 때 넘어오는 값 확인
