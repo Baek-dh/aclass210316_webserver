@@ -34,7 +34,7 @@ public class EncryptWrapper extends HttpServletRequestWrapper{
 		switch(key) {
 		case "memberPw" :
 		case "pwd1" :
-		case "currentPwd" :
+		case "currentPwd" :  
 		case "newPwd1" :
 			// 비밀번호는 암호화
 			value = getSha512(  super.getParameter(key)   ); break;
