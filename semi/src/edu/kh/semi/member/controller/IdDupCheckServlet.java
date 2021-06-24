@@ -1,6 +1,7 @@
 package edu.kh.semi.member.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -16,7 +17,6 @@ import edu.kh.semi.member.model.service.MemberService;
 public class IdDupCheckServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-	
 	// 아이디 중복 검사 팝업창으로 요청 위임
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
@@ -31,11 +31,31 @@ public class IdDupCheckServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	
 		// POST 방식 전달됨 -> 문자 인코딩을 UTF-8로 변환
-		request.setCharacterEncoding("UTF-8");
+		// request.setCharacterEncoding("UTF-8");
+		// -> 필터가 적용되면 필요없음
 		
 		String id = request.getParameter("id");
 		
+		// ajax를 이용하여 비동기로 중복 검사
 		try {
+			// DB에서 아이디 중복 검사 수행 후 결과를 반환 받아 저장
+			int result = new MemberService().idDupCheck(id);
+			
+			// ajax는 화면 전체가 아닌 
+			// 화면 일부 갱신에 사용되는 데이터만 응답으로 내보낸다.
+			
+			// 응답을 받을 클라이언트와의 연결 스트림
+			PrintWriter out = response.getWriter();
+			out.print(result);
+			
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		
+		
+		// 팝업창으로 중복 검사
+		/*try {
 			
 			// DB에서 아이디 중복 검사 수행 후 결과를 반환 받아 저장
 			int result = new MemberService().idDupCheck(id);
@@ -64,7 +84,7 @@ public class IdDupCheckServlet extends HttpServlet {
 			
 			view.forward(request, response);
 		}
-		
+		*/
 		
 		
 		

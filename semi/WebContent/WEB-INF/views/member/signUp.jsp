@@ -45,13 +45,13 @@
 							<!-- autocomplete="off" : input 태그 자동완성 기능을 끔 -->
 
 							<!-- 팝업창 중복체크 여부 판단을 위한 hidden 타입 요소 -->
-							<input type="hidden" name="idDup" id="idDup" value="false">
+							<!-- <input type="hidden" name="idDup" id="idDup" value="false"> -->
 						</div>
 
 						<!-- ajax 중복검사 시 필요없음 -->
-						<div class="col-md-3">
+						<!-- <div class="col-md-3">
 			                <button type="button" class="btn btn-primary" id="idDupCheck">중복검사</button>
-			            </div>
+			            </div> -->
 
 						<div class="col-md-6 offset-md-3">
 							<span id="checkId">&nbsp;</span>

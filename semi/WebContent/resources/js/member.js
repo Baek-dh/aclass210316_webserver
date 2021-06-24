@@ -16,7 +16,7 @@ const checkObj = {
 $("#id").on("input", function(){
 
     // 아이디가 입력되는 경우 hidden타입 태그의 값을 false로 변경
-    $("#idDup").val(false);
+    // $("#idDup").val(false);
 
     // 정규표현식 객체 생성
     const regExp = /^[a-zA-Z0-9]{6,12}$/;
@@ -26,9 +26,43 @@ $("#id").on("input", function(){
 
     // 입력된 아이디가 정규식에 일치하는 경우 == 유효한 값인 경우
     if(regExp.test(inputId)) { 
-        $("#checkId").text("유효한 아이디 입니다.").css("color","green");
+        //$("#checkId").text("유효한 아이디 입니다.").css("color","green");
+        //checkObj.id = true;
 
-        checkObj.id = true;
+        // Ajax를 이용하여 비동기적으로 아이디 중복 검사를 진행
+
+        // jQuery를 이용한 Ajax
+        $.ajax({
+            url : "idDupCheck",  // 요청 주소(필수로 작성!)
+            data : {"id" : inputId},     // 전달하려는 값(파라미터)  
+            type : "post",  // 데이터 전달 방식
+
+            success : function(result){
+                // 매개변수 result : 서버에서 비동기로 전달 받은 응답 데이터
+
+                console.log(result);
+
+                if( result > 0){ // 아이디가 중복 되는 경우
+                    $("#checkId").text("이미 사용중인 아이디 입니다.").css("color","red");
+                    checkObj.id = false;
+                    
+                } else{ // 아이디가 중복되지 않는 경우
+                    $("#checkId").text("사용 가능한 아이디 입니다.").css("color","green");
+                    checkObj.id = true;
+                }
+
+
+            }, // 비동기 통신 성공 시 동작
+
+            error : function(e){
+                // 매개변수 e : 예외 발생 시 Exception 객체를 전달 받을 변수
+
+                console.log("ajax 통신 실패");
+                console.log(e);
+
+            } // 비동기 통신 실패 시 동작
+        });
+
 
     } else{
         $("#checkId").text("영어, 숫자 6~12글자로 작성").css("color","red");
@@ -160,13 +194,13 @@ function validate(){
 
     // 아이디 중복 검사를 진행했는지 확인
     // * input 태그 값을 모두 String으로 반환됨!
-    if( $("#idDup").val() != "true" ){ // 중복 검사를 안한 경우
+    /*if( $("#idDup").val() != "true" ){ // 중복 검사를 안한 경우
         swal("아이디 중복 검사를 진행해 주세요.").then(function(){
             $("#idDupCheck").focus(); // 중복 검사 버튼으로 포커스 이동
         });
 
         return false; // submit 이벤트 제거
-    }
+    }*/
 
 
     // checkObj에 작성된 속성들이 모두 true인지 확인

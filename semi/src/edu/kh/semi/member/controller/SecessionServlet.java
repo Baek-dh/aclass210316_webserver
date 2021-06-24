@@ -35,10 +35,10 @@ public class SecessionServlet extends HttpServlet {
 
 		HttpSession session = request.getSession();
 		int memberNo = ((Member) session.getAttribute("loginMember")).getMemberNo();
+		
 
 		try {
 			int result = new MemberService().secession(currentPwd, memberNo);
-
 			
 			// 탈퇴 성공 시 -> 메인 페이지로 이동
 			// 실패 시 -> 회원 탈퇴 페이지로 이동
