@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+#<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <%-- 배포된 웹 애플리케이션의 최상위 주소를 간단히 얻어올 수 있도록 
@@ -49,7 +49,7 @@ body {
 			<div class="collapse navbar-collapse" id="navbarResponsive">
 				<ul class="navbar-nav ml-auto">
 					<li class="nav-item"><a class="nav-link" href="#">Notice</a></li>
-					<li class="nav-item"><a class="nav-link" href="#">Board</a></li>
+					<li class="nav-item"><a class="nav-link" href="${contextPath}/board/list?type=1">Board</a></li>
 
 					<%-- 로그인을 했는지, 안했는지 구분하는 방법 -> session에 loginMember 유무 --%>
 					<c:choose>
