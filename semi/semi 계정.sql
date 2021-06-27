@@ -239,5 +239,111 @@ WHERE MEMBER_STATUS = 'Y'
 AND MEMBER_ID = 'user991111';
 
 
+INSERT INTO CATEGORY VALUES(1, '잡담');
+INSERT INTO CATEGORY VALUES(2, '질문');
+INSERT INTO CATEGORY VALUES(3, '뉴스');
+
+SELECT * FROM CATEGORY;
+COMMIT;
+
+INSERT INTO BOARD_TYPE VALUES(1, '자유');
+INSERT INTO BOARD_TYPE VALUES(2, '정보');
+SELECT * FROM BOARD_TYPE;
+
+COMMIT;
+
+-- 게시글 번호 시퀀스 생성
+CREATE SEQUENCE SEQ_BNO;
+
+
+-- PL/SQL을 이용한 게시판 샘플 데이터 500개 생성
+SET SERVEROUTPUT ON;
+
+BEGIN
+    FOR N IN 1..500 LOOP
+        INSERT INTO BOARD
+        VALUES(SEQ_BNO.NEXTVAL,
+                    N || '번째 게시글',
+                    N || '번째 게시글 입니다.',
+                    DEFAULT, DEFAULT, DEFAULT, DEFAULT, 1,
+                    FLOOR(DBMS_RANDOM.VALUE(1,4)), 1);
+    END LOOP;
+END;
+/
+
+COMMIT;
+
+-- 파일 번호 시퀀스 생성
+CREATE SEQUENCE SEQ_FNO;
+
+INSERT INTO ATTACHMENT VALUES (SEQ_FNO.NEXTVAL, 'resources/images/freeboard/', 'sample1.jpg', 0, 500);
+INSERT INTO ATTACHMENT VALUES (SEQ_FNO.NEXTVAL, 'resources/images/freeboard/', 'sample2.gif', 1, 500);
+INSERT INTO ATTACHMENT VALUES (SEQ_FNO.NEXTVAL, 'resources/images/freeboard/', 'sample3.jpg', 2, 500);
+INSERT INTO ATTACHMENT VALUES (SEQ_FNO.NEXTVAL, 'resources/images/freeboard/', 'sample4.gif', 3, 500);
+INSERT INTO ATTACHMENT VALUES (SEQ_FNO.NEXTVAL, 'resources/images/freeboard/', 'sample5.gif', 0, 499);
+COMMIT;
+SELECT * FROM ATTACHMENT;
+
+
+-- 게시판 목록
+-- 게시글 번호 / 파일 경로 / 파일명 / 카테고리명 / 제목 / 작성자 / 작성일 / 조회수
+
+SELECT * FROM BOARD
+JOIN CATEGORY USING(CATEGORY_CD)
+JOIN MEMBER USING(MEMBER_NO)
+LEFT JOIN (SELECT * FROM ATTACHMENT WHERE FILE_LEVEL = 0) USING(BOARD_NO);
+
+-- 게시글 목록 500개 모두 조회
+-- 단, 게시글에 파일 레벨이 0인 요소가 포함되어 있으면 파일경로, 파일명, 파일레벨 조회
+
+SELECT * FROM ATTACHMENT WHERE FILE_LEVEL = 0  ;
+
+
+-- VIEW를 이용하여 SQL을 간단하게 만들기
+CREATE OR REPLACE VIEW BOARD_LIST AS
+    SELECT BOARD_NO, CATEGORY_NM, FILE_PATH, FILE_NM, 
+            BOARD_TITLE, MEMBER_NM, READ_COUNT, CREATE_DT, BOARD_STATUS, BOARD_TYPE_NO
+    FROM BOARD
+    JOIN CATEGORY USING(CATEGORY_CD)
+    JOIN MEMBER USING(MEMBER_NO)
+    LEFT JOIN (SELECT * FROM ATTACHMENT WHERE FILE_LEVEL = 0) USING(BOARD_NO);
+    
+SELECT * FROM BOARD_LIST;
+
+-------------------------------------------------------------------------------------------------------
+
+-- 페이징 처리 (Pagenation)
+-- 한 페이지에 보여질 게시글 수를 지정
+-- ex) 한 페이지당 게시글 10개씩 
+-- 1페이지 500 ~ 491   (!최신순!)
+-- 2페이지 490 ~ 481
+-- ...
+-- 50페이지 10 ~ 1
+
+
+-- 게시글 번호가 최근 게시글 목록 10개 조회
+-- + 삭제되지 않아야함, + 게시판 타입은 1번
+SELECT * FROM 
+    (SELECT * FROM BOARD_LIST
+    WHERE BOARD_STATUS = 'Y'
+    AND BOARD_TYPE_NO = 1
+    ORDER BY BOARD_NO DESC) 
+WHERE ROWNUM BETWEEN 11 AND 20; 
+--> ROWNUM을 조건으로 사용하는 경우 1부터 시작이 강요됨.
+    --> ROWNUM은 1부터 조회되는 행의 수를 세는 가상의 컬럼
+
+
+/********************************************/
+SELECT * FROM 
+( SELECT ROWNUM RNUM,   A.* FROM 
+    (SELECT * FROM BOARD_LIST
+    WHERE BOARD_STATUS = 'Y'
+    AND BOARD_TYPE_NO = 1
+    ORDER BY BOARD_NO DESC) A )
+WHERE RNUM BETWEEN 11 AND 20  ; 
+
+
+
+
 
 
