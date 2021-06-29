@@ -109,7 +109,7 @@
 										
 										<%-- 글 제목 --%>
 										<td class="boardTitle">                                                         
-											<a href="#">
+											<a href="view?no=${board.boardNo}&cp=${pagination.currentPage}&type=${pagination.boardType}">
 												
 												<%-- 썸네일 출력 --%>
 												<c:choose>
@@ -125,7 +125,6 @@
 												
 												</c:choose>
 											
-											
 											 	${board.boardTitle }   
 											</a>
 											
@@ -138,7 +137,22 @@
 										<td> ${board.readCount} </td>
 										
 										<%-- 작성일 --%>
-										<td> ${board.createDate} </td>
+										<td> 
+											<fmt:formatDate var="createDate" value="${board.createDate}"  pattern="yyyy-MM-dd"/>                          
+											<fmt:formatDate var="today" value="<%= new java.util.Date() %>"  pattern="yyyy-MM-dd"/>                          
+											
+											<c:choose>
+												<%-- 글 작성일이 오늘이 아닐 경우 --%>
+												<c:when test="${createDate != today}">
+													${createDate}
+												</c:when>
+												
+												<%-- 글 작성일이 오늘일 경우 --%>
+												<c:otherwise>
+													<fmt:formatDate value="${board.createDate}"  pattern="HH:mm"/>                          
+												</c:otherwise>
+											</c:choose>
+										</td>
 									</tr>
 								</c:forEach>
 							
@@ -152,9 +166,11 @@
 			</div>
 
 
-			<button type="button" class="btn btn-primary float-right" id="insertBtn"
-			 onclick="location.href='#';">글쓰기</button>
-			
+			<%-- 로그인 되어 있을 경우에만 글쓰기 버튼 노출 --%>
+			<c:if test="${!empty loginMember }">
+				<button type="button" class="btn btn-primary float-right" id="insertBtn"
+				 onclick="location.href='../board2/insertForm?type=${pagination.boardType}';">글쓰기</button>
+			</c:if>
 			
 			
 			<%---------------------- Pagination start----------------------%>

@@ -10,8 +10,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import edu.kh.semi.board.model.service.Board2Service;
 import edu.kh.semi.board.model.service.SelectBoardService;
 import edu.kh.semi.board.model.vo.Board;
+import edu.kh.semi.board.model.vo.Category;
 import edu.kh.semi.board.model.vo.Pagination;
 
 // MVC (Model View Controller)
@@ -28,8 +30,8 @@ import edu.kh.semi.board.model.vo.Pagination;
 //              응답화면을 연결하는 제어 역할
 
 
-@WebServlet("/board/*") //   /board로 시작하는 요청을 모두 받음
-public class SelectBoardController extends HttpServlet {
+@WebServlet("/board2/*") //   /board2로 시작하는 요청을 모두 받음
+public class Board2Controller extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	// Front Controller 패턴   (디자인 패턴)
@@ -40,10 +42,10 @@ public class SelectBoardController extends HttpServlet {
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-		String uri = request.getRequestURI(); // 요청 주소  			ex) /semi/board/list
+		String uri = request.getRequestURI(); // 요청 주소  			ex) /semi/board2/list
 		String contextPath = request.getContextPath(); // 최상위 주소  	ex) /semi 
-		String command = uri.substring( (contextPath + "/board/").length() ); // list
-		// uri에서 contextPath + "/board/" 만큼을 앞에서 부터 잘라낸 후 나머지를 command 저장
+		String command = uri.substring( (contextPath + "/board2/").length() ); // list
+		// uri에서 contextPath + "/board2/" 만큼을 앞에서 부터 잘라낸 후 나머지를 command 저장
 		
 		
 		String path = null; // 응답화면 주소 또는 경로
@@ -56,60 +58,26 @@ public class SelectBoardController extends HttpServlet {
 		
 		try {
 			
-			SelectBoardService service = new SelectBoardService();
+			Board2Service service = new Board2Service();
 			
 			// 현재 페이지 저장
 			// 삼항 연산자를 이용해서 cp가 없으면 1, 있으면 int형태로 파싱한 cp값 을 저장
 			int cp =  request.getParameter("cp") == null  ?  1 : Integer.parseInt(request.getParameter("cp"))  ;
 			
 			
-			// 게시글 목록 조회 Controller
-			if( command.equals("list") ) {
+			// 게시글 등록 화면 전환 Controller
+			if(command.equals("insertForm")) {
 				
-				// 쿼리스트링에 있는 type을 얻어와 int로 파싱 후 저장
-				int boardType = Integer.parseInt(request.getParameter("type"));
+				// 카테고리 목록 조회 
+				List<Category> category = service.selectCategoryList();
 				
-				// 페이징 처리를 위한 여러 정보를 담고있는 객체 Pagination 생성
-				Pagination pagination = service.getPagination(cp, boardType);
+				request.setAttribute("category", category);
 				
-				//System.out.println(pagination);
-				
-				// pagination을 이용하여 게시글 목록에 보여져야할 내용을 DB에서 조회
-				List<Board> boardList = service.selectBoardList(pagination);
-				
-				
-				// pagination, boardList를 request에 속성으로 추가한 후 boardList.jsp로 forward
-				
-				request.setAttribute("pagination", pagination);
-				request.setAttribute("boardList", boardList);
-				
-				path = "/WEB-INF/views/board/boardList.jsp";
-				view = request.getRequestDispatcher(path);
-				view.forward(request, response);
-				
-				
-				
-			}
-			
-			// 게시글 상세 조회 Controller
-			else if( command.equals("view") ) {
-				
-				int boardNo = Integer.parseInt(request.getParameter("no")); 
-				
-				Board board = service.selectBoard(boardNo);
-
-				//System.out.println(board);
-				
-				request.setAttribute("board", board);
-				
-				path = "/WEB-INF/views/board/boardView.jsp";
+				path = "/WEB-INF/views/board/boardInsert.jsp";
 				view = request.getRequestDispatcher(path);
 				view.forward(request, response);
 				
 			}
-			
-			
-			
 			
 			
 			

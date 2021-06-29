@@ -17,6 +17,14 @@ public class Board {
 	private List<String> filePath;
 	private List<String> fileName;
 	
+	
+	// 상세조회에 필요한 필드
+	private String boardContent;	// 글 내용
+	private int memberNo;			// 작성 회원 번호
+	private Timestamp modifyDate;	// 마지막 수정일
+	private List<Attachment> atList;// 게시글에 첨부된 파일(이미지) 목록
+	
+	
 	public Board() {}
 
 	public int getBoardNo() {
@@ -83,11 +91,46 @@ public class Board {
 		this.fileName = fileName;
 	}
 
+	public String getBoardContent() {
+		return boardContent;
+	}
+
+	public void setBoardContent(String boardContent) {
+		this.boardContent = boardContent;
+	}
+
+	public int getMemberNo() {
+		return memberNo;
+	}
+
+	public void setMemberNo(int memberNo) {
+		this.memberNo = memberNo;
+	}
+
+	public Timestamp getModifyDate() {
+		return modifyDate;
+	}
+
+	public void setModifyDate(Timestamp modifyDate) {
+		this.modifyDate = modifyDate;
+	}
+
+	public List<Attachment> getAtList() {
+		return atList;
+	}
+
+	public void setAtList(List<Attachment> atList) {
+		this.atList = atList;
+	}
+
 	@Override
 	public String toString() {
 		return "Board [boardNo=" + boardNo + ", boardTitle=" + boardTitle + ", memberName=" + memberName
 				+ ", categoryName=" + categoryName + ", readCount=" + readCount + ", createDate=" + createDate
-				+ ", filePath=" + filePath + ", fileName=" + fileName + "]";
+				+ ", filePath=" + filePath + ", fileName=" + fileName + ", boardContent=" + boardContent + ", memberNo="
+				+ memberNo + ", modifyDate=" + modifyDate + ", atList=" + atList + "]";
 	}
+
+	
 	
 }
