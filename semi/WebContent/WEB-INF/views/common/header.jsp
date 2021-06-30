@@ -40,7 +40,7 @@ body {
 		<div class="container">
 		
 			<!-- 메인페이지 이동 로고 -->
-			<a class="navbar-brand" href="${contextPath}">Semi Project</a>
+			<a class="navbar-brand" href="${contextPath}">Semi Project </a>
 			
 			
 			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
