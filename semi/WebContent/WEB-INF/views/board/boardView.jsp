@@ -20,8 +20,7 @@
 		width : 100%;
 		height: 100%;
 		border : 1px solid #ced4da;
-		max-width : 300px;
-		max-height: 300px;
+		position : relative;
 		
 	}
 	
@@ -60,6 +59,7 @@
 	.boardImg {
 		width: 200px;
 		height: 200px;
+		
 	}
 	.thubnail{
 		width: 300px;
@@ -67,7 +67,14 @@
 	}
 	
 	.boardImg > img{
-		width : 100%;
+		max-width : 100%;
+		max-height : 100%;
+		position: absolute;
+		top: 0;
+		bottom : 0;
+		left : 0;
+		right : 0;
+		margin : auto;
 	}
 </style>
 </head>
@@ -171,7 +178,7 @@
 						<button id="deleteBtn" class="btn btn-primary float-right mr-2">삭제</button> 
 						<button id="updateBtn" class="btn btn-primary float-right mr-2">수정</button> 
 					
-						<a href="#" class="btn btn-primary float-right mr-2">목록으로</a>
+						<a href="list?type=${param.type}&cp=${param.cp}" class="btn btn-primary float-right mr-2">목록으로</a>
 				</div>
 				
 				

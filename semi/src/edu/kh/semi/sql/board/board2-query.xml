@@ -6,6 +6,23 @@
 		SELECT * FROM CATEGORY
 	</entry>
 
+	<!-- 다음 게시글 번호 조회 -->
+	<entry key="nextBoardNo">
+		SELECT SEQ_BNO.NEXTVAL FROM DUAL
+	</entry>
+
+	<!-- 게시글 삽입 -->
+	<entry key="insertBoard">
+		INSERT INTO BOARD
+		VALUES(?, ?, ?, DEFAULT, DEFAULT, DEFAULT, DEFAULT, ?, ?, ?)
+	</entry>
+
+	<!-- 첨부 파일 삽입 -->
+	<entry key="insertAttachment">
+		INSERT INTO ATTACHMENT
+		VALUES(SEQ_FNO.NEXTVAL, ?, ?, ?, ?)
+	</entry>
+
 
 
 

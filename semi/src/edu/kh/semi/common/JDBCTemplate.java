@@ -50,6 +50,8 @@ public class JDBCTemplate {
 
 			conn = ds.getConnection(); // DataSource에 의해 미리 만들어진 Connection 중 하나를 얻어옴.
 			
+			conn.setAutoCommit(false);
+			
 		}catch (Exception e) {
 			e.printStackTrace();
 		}

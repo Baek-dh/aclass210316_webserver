@@ -79,6 +79,96 @@ public class Board2DAO {
 	}
 
 
+	/** 다음 게시글 번호 조회 DAO
+	 * @param conn
+	 * @return boardNo
+	 * @throws Exception
+	 */
+	public int nextBoardNo(Connection conn) throws Exception{
+		
+		int boardNo = 0;
+		
+		String sql = prop.getProperty("nextBoardNo");
+		
+		try {
+			stmt = conn.createStatement();
+			rs = stmt.executeQuery(sql);
+			
+			if(rs.next()) {
+				boardNo = rs.getInt(1);
+			}
+			
+		}finally {
+			close(rs);
+			close(stmt);
+		}
+		
+		return boardNo;
+	}
+
+
+	/** 게시글 삽입 DAO
+	 * @param conn
+	 * @param board
+	 * @param boardType
+	 * @return result
+	 * @throws Exception
+	 */
+	public int insertBoard(Connection conn, Board board, int boardType) throws Exception {
+	
+		int result = 0;
+		
+		String sql = prop.getProperty("insertBoard");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, board.getBoardNo());
+			pstmt.setString(2, board.getBoardTitle());
+			pstmt.setString(3, board.getBoardContent());
+			pstmt.setInt(4, board.getMemberNo());
+			pstmt.setInt(5, board.getCategoryCode());
+			pstmt.setInt(6, boardType);
+			
+			result = pstmt.executeUpdate();
+			
+		}finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+
+	/** 첨부파일(이미지) 정보 삽입 DAO
+	 * @param conn
+	 * @param at
+	 * @return result
+	 * @throws Exception
+	 */
+	public int insertAttachment(Connection conn, Attachment at) throws Exception {
+		int result = 0;
+		
+		String sql = prop.getProperty("insertAttachment");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, at.getFilePath());
+			pstmt.setString(2, at.getFileName());
+			pstmt.setInt(3, at.getFileLevel());
+			pstmt.setInt(4, at.getBoardNo());
+			
+			result = pstmt.executeUpdate();
+			
+		}finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+
 	
 	
 	
