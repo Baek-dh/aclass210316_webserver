@@ -174,13 +174,14 @@
 				 
 				
 				<div>
-					<%-- 로그인된 회원과 해당 글 작성자가 같은 경우에만 버튼 노출--%>
-						<button id="deleteBtn" class="btn btn-primary float-right mr-2">삭제</button> 
-						<button id="updateBtn" class="btn btn-primary float-right mr-2">수정</button> 
 					
+					<%-- 로그인된 회원과 해당 글 작성자가 같은 경우에만 버튼 노출--%>
+					<c:if test="${loginMember.memberNo == board.memberNo }">
+						<button id="deleteBtn" class="btn btn-primary float-right mr-2">삭제</button> 
+						<button id="updateBtn" class="btn btn-primary float-right mr-2" onclick="fnRequest('updateForm');">수정</button> 
+					</c:if>
 						<a href="list?type=${param.type}&cp=${param.cp}" class="btn btn-primary float-right mr-2">목록으로</a>
 				</div>
-				
 				
 				<%-- 댓글 영역 --%>
 			</div>
@@ -192,9 +193,27 @@
 	<jsp:include page="../common/footer.jsp"></jsp:include>
 	
 	
+	<form action="#" method="POST" name="requestForm">
+		<input type="hidden" name="boardNo" value="${board.boardNo}">
+		<input type="hidden" name="cp" value="${param.cp}">
+		<input type="hidden" name="type" value="${param.type}">
+	</form>
+	
+	
 	<script>
-		
+		function fnRequest(addr){
+			
+			// 현재 문서 내부에 name속성 값이 requestForm인 요소의 action 속성 값을 변경
+			document.requestForm.action = "../board2/" + addr;
+			
+			// 현재 문서 내부에 name속성 값이 requestForm인 요소를 제출해라
+			document.requestForm.submit();
+			
+		}
 		
 	</script>
+	
+	
+	
 </body>
 </html>

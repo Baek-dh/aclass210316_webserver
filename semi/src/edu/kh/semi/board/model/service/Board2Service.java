@@ -118,5 +118,74 @@ public class Board2Service {
 		
 		return result;
 	}
+
+	
+	
+	
+	
+	/** 게시글 수정 Service
+	 * @param board
+	 * @param atList
+	 * @return result
+	 * @throws Exception
+	 */
+	public int updateBoard(Board board, List<Attachment> atList) throws Exception {
+		
+		Connection conn = getConnection();
+		
+		
+		// 게시글, 첨부파일 DAO를 분리해서 호출
+		
+		// 크로스 사이트 스크립팅 방지 + 개행 문자 처리
+		board.setBoardContent( replaceParameter( board.getBoardContent()) );
+		board.setBoardTitle( replaceParameter( board.getBoardTitle()) );
+		board.setBoardContent( board.getBoardContent().replaceAll("\r\n", "<br>") );
+		
+		// 게시글 수정
+		int result = dao.updateBoard(conn, board);
+		
+		if(result > 0) { // 게시글 수정 성공 시
+			
+			// 파일 정보를 atList에서 하나씩 꺼내서 DAO를 호출
+			for(Attachment at : atList) {
+				
+				result = dao.updateAttachment(conn, at);
+				
+				// updateAttachment() 수행 결과가 0인 경우
+				// == 기존에 해당 레벨에 첨부 파일이 없었다.
+				// --> 없으면 insert를 진행하면 된다.
+				
+				if( result == 0 ) {
+					result = dao.insertAttachment(conn, at);
+					
+					if( result == 0) { // insert가 안된 경우
+						break;
+					}
+				}
+			}
+			
+			
+			// 반복문 종료 후 result가 0보다 큰 경우 
+			// == 첨부 파일의 수정, 삽입 모두 성공한 경우
+			if(result > 0) {
+				commit(conn);
+			}else {
+				rollback(conn);
+			}
+			
+			
+		}else {
+			rollback(conn);
+		}
+		
+		
+		close(conn);
+		
+		return result;
+	}
+	
+	
+	
+	
 	
 }

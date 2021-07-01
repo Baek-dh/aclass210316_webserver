@@ -64,6 +64,7 @@ public class SelectBoardDAO {
 			pstmt = conn.prepareStatement(sql);
 			
 			pstmt.setInt(1, boardType);
+			pstmt.setInt(2, boardType);
 			
 			rs = pstmt.executeQuery();
 			

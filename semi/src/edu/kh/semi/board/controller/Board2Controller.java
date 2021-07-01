@@ -133,6 +133,7 @@ public class Board2Controller extends HttpServlet {
 				switch(boardType) { // 게시판 별로 경로 지정
 				case 1: filePath += "freeboard/"; break;
 				case 2: filePath += "infoboard/"; break;
+				case 3: filePath += "qnaboard/"; break;
 				}
 				
 				// 실제 저장 경로
@@ -232,17 +233,142 @@ public class Board2Controller extends HttpServlet {
 				session.setAttribute("icon", icon);
 				session.setAttribute("title", title);
 				response.sendRedirect(path);
+			}
+			
+			
+			// 게시글 수정 화면 전환 Controller
+			else if(command.equals("updateForm")) {
+				
+				// 게시글 수정 화면에 수정하려는 게시글의 내용이 미리 작성되어 있어야 함
+				// --> 게시글 상세 조회 + 카테고리 목록 조회
+				
+				// 카테고리 목록 조회
+				List<Category> category = service.selectCategoryList();
+				
+				// 게시글 상세조회 (게시글 번호 필요)
+				int boardNo = Integer.parseInt(request.getParameter("boardNo"));
+				Board board = new SelectBoardService().selectBoard(boardNo);
+			
+				// 게시글 내용에 있는 개행문자 <br>  --> \r\n으로 변경 (원래는 Service에 작성하는게 좋음)
+				board.setBoardContent( board.getBoardContent().replaceAll("<br>", "\r\n") );
+				
+				request.setAttribute("category", category);
+				request.setAttribute("board", board);
+				
+				path = "/WEB-INF/views/board/boardUpdate.jsp";
+				view = request.getRequestDispatcher(path);
+				view.forward(request, response);
+			}
+			
+			// 게시글 수정 Controller
+			else if(command.equals("update")) {
+				
+				// MultipartRequest 객체를 만들기위한 값 준비
+				int maxSize = 1024 * 1024 * 20; // 20MB 용량 제한 
+				
+				// 실제 서버 저장 경로 + 웹상 접근 경로
+				HttpSession session = request.getSession();
+				
+				String root = session.getServletContext().getRealPath("/"); // WebContent의 실제 경로   
+				String filePath = "resources/images/"; // 웹상 접근 경로 (1/2)
+				
+				int boardType = Integer.parseInt( request.getParameter("type") );
+				// multipart/form-data 형식으로 전달 된 파라미터 중 
+				// POST방식 데이터는 request.getParameter() 사용 시 null을 반환하지만
+				// GET방식 데이터는 request.getParameter() 사용 시 정상적으로 값을 반환함.
+				
+				switch(boardType) {
+				case 1 : filePath += "freeboard/"; break;
+				case 2: filePath += "infoboard/"; break;
+				case 3: filePath += "qnaboard/"; break;
+				}
+				
+				MultipartRequest mpRequest 
+					= new MultipartRequest(request, root + filePath , maxSize,
+										   "UTF-8", new MyFileRenamePolicy() );
+				
+				// MultipartRequest 객체 생성 시 지정된 경로에 파일이 업로드된다!
+				
+				
+				// 게시글 수정에 사용되는 파라미터(게시글 번호, 제목, 내용, 카테고리, 이미지...)
+				int boardNo = Integer.parseInt( mpRequest.getParameter("boardNo") );
+				String boardTitle = mpRequest.getParameter("boardTitle");
+				String boardContent = mpRequest.getParameter("boardContent");
+				int categoryCode = Integer.parseInt( mpRequest.getParameter("categoryCode") );
+				
+				Board board = new Board();
+				board.setBoardNo(boardNo);
+				board.setBoardTitle(boardTitle);
+				board.setBoardContent(boardContent);
+				board.setCategoryCode(categoryCode);
+				
+				// 첨부파일(이미지) 정보를 List에 담기
+				List<Attachment> atList = new ArrayList<Attachment>();
+				
+				// 전달 받은 파라미터 중 type이 file인 요소의 name 속성 값을 모두 반환
+				Enumeration<String> images = mpRequest.getFileNames();
+				
+				while(images.hasMoreElements()) { // 다음 name 속성 값이 있으면
+					
+					String name = images.nextElement(); // name 하나 얻어오기
+					System.out.println("name : " + name);
+					System.out.println("변경 전 : " + mpRequest.getOriginalFileName(name));
+					System.out.println("변경 후 : " + mpRequest.getFilesystemName(name));
+					
+					// 업로드된 파일이 있을 때
+					if( mpRequest.getFilesystemName(name) != null ) {
+						Attachment at = new Attachment();
+						
+						at.setFilePath(filePath);
+						at.setFileName(mpRequest.getFilesystemName(name));
+						
+						// 파일 레벨 at에 세팅하기
+						at.setFileLevel(  Integer.parseInt( name.substring("img".length())  )  );
+						at.setBoardNo(boardNo);
+						
+						atList.add(at);
+					}
+				}
+				
+				
+				System.out.println(board);
+				for(Attachment at : atList) {
+					System.out.println(at);
+				}
+				
+				
+				// 게시글 수정 Service 호출
+				int result = service.updateBoard(board, atList);
+				
+				// 수정 성공 -> 수정된 게시글 상세 조회 화면
+							// boardNo, type, cp
+				// 수정 실패 -> 수정하던 페이지로 이동
+				
+				cp = Integer.parseInt(mpRequest.getParameter("cp"));
+				
+				if(result > 0) {
+					icon = "success";
+					title = "게시글 수정 성공";
+					path = "../board/view?no="+boardNo+"&cp="+cp+"&type="+boardType;
+				}else {
+					icon = "error";
+					title = "게시글 수정 실패";
+					path = request.getHeader("referer");
+				}
+				
+				session.setAttribute("icon", icon);
+				session.setAttribute("title", title);
+				response.sendRedirect(path);
+				
 				
 			}
+			
 			
 			
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
 		
-		
-		
-	
 	}
 
 	

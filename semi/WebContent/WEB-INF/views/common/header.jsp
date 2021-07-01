@@ -50,8 +50,8 @@ body {
 				<ul class="navbar-nav ml-auto">
 					<li class="nav-item"><a class="nav-link" href="#">Notice</a></li>
 					<li class="nav-item"><a class="nav-link" href="${contextPath}/board/list?type=1">Free Board</a></li>
-					<%-- <li class="nav-item"><a class="nav-link" href="${contextPath}/board/list?type=2">정보게시판</a></li>
- --%>
+					<li class="nav-item"><a class="nav-link" href="${contextPath}/board/list?type=2">Information Board</a></li>
+					<li class="nav-item"><a class="nav-link" href="${contextPath}/board/list?type=3">QnA Board</a></li>
 					<%-- 로그인을 했는지, 안했는지 구분하는 방법 -> session에 loginMember 유무 --%>
 					<c:choose>
 						<%-- 로그인이 되어있지 않을 때
