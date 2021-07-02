@@ -10,9 +10,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import edu.kh.semi.board.model.service.ReplyService;
 import edu.kh.semi.board.model.service.SelectBoardService;
 import edu.kh.semi.board.model.vo.Board;
 import edu.kh.semi.board.model.vo.Pagination;
+import edu.kh.semi.board.model.vo.Reply;
 
 // MVC (Model View Controller)
 
@@ -97,10 +99,15 @@ public class SelectBoardController extends HttpServlet {
 				int boardNo = Integer.parseInt(request.getParameter("no")); 
 				
 				Board board = service.selectBoard(boardNo);
+				
+				// 해당 게시글 댓글 목록 조회
+				List<Reply> rList = new ReplyService().selectList(boardNo);
 
 				//System.out.println(board);
 				
 				request.setAttribute("board", board);
+				request.setAttribute("rList", rList);
+				
 				
 				path = "/WEB-INF/views/board/boardView.jsp";
 				view = request.getRequestDispatcher(path);

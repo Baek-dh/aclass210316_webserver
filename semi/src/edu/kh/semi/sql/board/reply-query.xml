@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+
+   <!-- 댓글 목록 조회 -->
+   <entry key="selectList">
+      SELECT REPLY_NO, REPLY_CONTENT, CREATE_DT, BOARD_NO, MEMBER_NO, MEMBER_NM
+      FROM REPLY
+      JOIN MEMBER USING(MEMBER_NO)
+      WHERE REPLY_STATUS = 'Y'
+      AND BOARD_NO = ?
+      ORDER BY REPLY_NO DESC
+   </entry>
+   
+   <!-- 댓글 삽입 -->
+   <entry key="insertReply">
+      INSERT INTO REPLY 
+      VALUES(SEQ_RNO.NEXTVAL, ?, DEFAULT, DEFAULT, ?, ?)
+   </entry>
+   
+   <!-- 댓글 수정 -->
+   <entry key="updateReply">
+      UPDATE REPLY SET
+      REPLY_CONTENT = ?
+      WHERE REPLY_NO = ?
+   </entry>
+
+   <!-- 댓글 삭제 -->
+   <entry key="deleteReply">
+      UPDATE REPLY SET
+      REPLY_STATUS = 'N'
+      WHERE REPLY_NO = ?
+   </entry>
+
+
+</properties>

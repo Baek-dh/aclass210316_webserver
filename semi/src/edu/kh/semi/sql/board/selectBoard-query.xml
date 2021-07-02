@@ -11,7 +11,7 @@
 		    WHERE BOARD_TYPE_NO=?)
 	</entry>
 	
-	`
+	
 	<!-- 게시글 목록 조회(페이징 처리 적용) -->
 	<entry key="selectBoardList">
 		SELECT * FROM 
