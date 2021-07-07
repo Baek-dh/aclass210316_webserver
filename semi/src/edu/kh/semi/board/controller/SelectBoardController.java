@@ -71,13 +71,39 @@ public class SelectBoardController extends HttpServlet {
 				// 쿼리스트링에 있는 type을 얻어와 int로 파싱 후 저장
 				int boardType = Integer.parseInt(request.getParameter("type"));
 				
-				// 페이징 처리를 위한 여러 정보를 담고있는 객체 Pagination 생성
-				Pagination pagination = service.getPagination(cp, boardType);
 				
-				//System.out.println(pagination);
+				// -------------------------- 검색 추가 시작 ---------------------------
+				Pagination pagination = null;
+				List<Board> boardList = null;
 				
-				// pagination을 이용하여 게시글 목록에 보여져야할 내용을 DB에서 조회
-				List<Board> boardList = service.selectBoardList(pagination);
+				// 만약에 검색을 하지 않았을 경우
+				if( request.getParameter("sv") == null ) {
+					// 검색어가 없을 경우
+				
+					// 페이징 처리를 위한 여러 정보를 담고있는 객체 Pagination 생성
+					pagination = service.getPagination(cp, boardType);
+					
+					// pagination을 이용하여 게시글 목록에 보여져야할 내용을 DB에서 조회
+					boardList = service.selectBoardList(pagination);
+					
+					
+				} else { // 검색어가 있을 경우
+					String searchKey = request.getParameter("sk");
+					String searchValue = request.getParameter("sv");
+					
+					pagination = service.getPagination(cp, boardType, searchKey, searchValue);
+					
+					boardList = service.selectBoardList(pagination, searchKey, searchValue);
+					
+				}
+				
+				
+				
+				// -------------------------- 검색 추가 종료---------------------------
+			
+				
+				
+				
 				
 				
 				// pagination, boardList를 request에 속성으로 추가한 후 boardList.jsp로 forward
